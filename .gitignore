@@ -1,0 +1,11 @@
+# Ignore everything
+*
+
+# But do NOT ignore directories
+!*/
+
+# And do NOT ignore files with an extension (like .c, .h, .md)
+!*.*
+*.exe
+
+private/
