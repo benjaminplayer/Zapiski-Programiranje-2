@@ -1,2 +1,3 @@
 ## Vaje 1
-[!CAUTION] Te datoteke niso se bile testirane
+>[!CAUTION]
+>Te datoteke se niso bile testirane
