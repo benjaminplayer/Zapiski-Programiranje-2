@@ -24,7 +24,8 @@ int main()
     for (int i = 0; i < n; i++)
     {
         no = readInt();
-        if (prev != -1 && no != prev) {
+        if (prev != -1 && no != prev)
+        {
             out = 0;
             break;
         }
