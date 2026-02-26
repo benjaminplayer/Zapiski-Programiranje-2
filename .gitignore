@@ -12,7 +12,7 @@
 # 4. Explicitly ignore everything inside Tests EXCEPT the runTests binary
 Tests/*
 !Tests/runTests
-
+!Tests/readme.md
 # 5. Global ignores for compiled files
 *.exe
 *.o

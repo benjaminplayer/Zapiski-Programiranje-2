@@ -92,13 +92,9 @@ int main(int argc, char *argv[])
         return 1;
     }
     char setVarName[1024];
-    char *name = substr(argv[1], 0, strlen(argv[1]) - 2);
     char *sub = substr(argv[1], lastIndexOf(argv[1],'/') + 1, strlen(argv[1])- 2);
-    printf("Running test %s\n", name);
-    printf("sub = %s\n", sub);
-    free(name);
+
     snprintf(setVarName, sizeof(setVarName), "cd res && export name=%s && make && make test", sub);
-    printf("setVarName = %s\n", setVarName);
     free(sub);
 
     if (system(setVarName) != 0)
