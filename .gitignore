@@ -1,12 +1,18 @@
-# Ignore everything
+# 1. Ignore everything
 *
 
-# But do NOT ignore directories
+# 2. Allow directories (necessary so Git can look inside them)
 !*/
 
-# And do NOT ignore files with an extension (like .c, .h, .md)
-!*.*
-*.exe
+# 3. Allow specific files globally
+!*.c
+!*.h
+!*.md
 
-private/
-Vaje/Vaje1/tests
+# 4. Explicitly ignore everything inside Tests EXCEPT the runTests binary
+Tests/*
+!Tests/runTests
+
+# 5. Global ignores for compiled files
+*.exe
+*.o
