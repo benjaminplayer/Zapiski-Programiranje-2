@@ -22,29 +22,28 @@ int readInt()
 
 int main()
 {
-    int n, max = INT32_MIN, second_max = max + 1;
-    n = getchar() - '0';
+    const int n = getchar() - '0';
+    int max = INT32_MIN, prevMax = max;
     getchar(); //read space cene ne dela
-    int prev = readInt();
 
-    for (int i = 1; i < n; i++)
+    for (int i = 0; i < n; i++)
     {
-        int cur = readInt();
-        int localMax = (prev > cur)? prev : cur;
-        if (localMax == max) second_max = max;
-        else
+        const int read = readInt();
+        if (read > max)
         {
-            if (localMax > max)
-                max = localMax;
-            if (prev < max && prev > second_max)
-                second_max = prev;
-            else if (cur < max && cur > second_max)
-                second_max = cur;
-        }
+            prevMax = max;
+            max = read;
+        }else if (read == max)
+            prevMax = max;
+        else if (read > prevMax)
+            prevMax = read;
 
-        prev = cur;
     }
-    putchar(second_max + '0');
+
+    putchar(prevMax +'0');
+    //putchar(second_max);
+
+
     //printf("%d", second_max);
     //printIntAsChars(second_max);
     return 0;

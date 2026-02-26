@@ -1,7 +1,7 @@
 ## Vaje 1
 
->[!CAUTION]
->Te datoteke se niso bile testirane
+>[!INFO]
+>Te datoteke so bile testirane na Ubuntu 24.04.4 LTS
 
 ### how to compile?
 ```bash
