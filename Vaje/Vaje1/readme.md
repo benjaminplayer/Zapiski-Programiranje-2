@@ -1,6 +1,6 @@
 ## Vaje 1
 
->[!INFO]
+>[!NOTE]
 >Te datoteke so bile testirane na Ubuntu 24.04.4 LTS
 
 ### how to compile?
