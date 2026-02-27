@@ -63,7 +63,8 @@ else
 
 if izracuna pogoj in poleda ali je pomnilniska slika 0. Ce je je false, ce je razlicna je true.
 
->[!CAUTION] NE UPORABLJAJ
+>[!CAUTION]
+>NE UPORABLJAJ
 >C ima stavek ``` goto label```, ki skoci na del kode, ki je marked z label.
 >Primer:
 >```C
@@ -137,7 +138,8 @@ int n;
 v header files so prototipi funkcij, ki zivijo v .c files
 
 če funkciji ne definiram tipa, potem C prevzame da je tip int
->[!WARNING] tega se res ne uporablja!
+>[!WARNING]
+>tega se res ne uporablja!
 ```C
 add(int a, int b)
 {
