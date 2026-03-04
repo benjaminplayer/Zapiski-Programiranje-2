@@ -54,7 +54,7 @@ char* substr(char *src, int start, int end)
     return dest;
 }
 
-int main(int argc, char *argv[])
+int main(const int argc, char *argv[])
 {
     if (argc != 3)
     {
