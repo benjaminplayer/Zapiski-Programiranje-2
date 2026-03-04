@@ -10,6 +10,7 @@
 !*.md
 
 # 4. Explicitly ignore everything inside Tests EXCEPT the runTests binary
+private/
 Tests/*
 !Tests/runTests
 !Tests/readme.md
