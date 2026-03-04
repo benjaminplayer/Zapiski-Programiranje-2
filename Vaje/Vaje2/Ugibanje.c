@@ -14,7 +14,7 @@ int main()
         {
             case 0:
                 printf("%d",guess);
-                break;
+                return 0;
             case 1:
                 lbound = guess + 1;
                 break;
