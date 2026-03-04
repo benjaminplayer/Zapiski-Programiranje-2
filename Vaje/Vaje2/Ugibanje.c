@@ -18,7 +18,7 @@ int main()
             case 1:
                 lbound = guess + 1;
                 break;
-            case 2:
+            case -1:
                 hbound = guess - 1;
                 break;
         }
