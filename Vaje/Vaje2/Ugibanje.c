@@ -1,52 +1,31 @@
 #include <stdio.h>
-#include <stdbool.h>
-#include <math.h>
 
 int main()
 {
-    int a, b, read;
-    bool guessed = false;
-    scanf("%d%d",&a,&b);
-    int lbound = (a < b)? a : b, hbound = (a > b)? a : b, guess = 0;
+    int lbound, hbound, guess = 0, read;
+    scanf("%d%d",&lbound,&hbound);
     //printf("lbound: %d hbound %d\n",lbound,hbound);
-    while (scanf("%d",&read)!=EOF && read != -2)
+    while (scanf("%d",&read) == 1 && lbound <= hbound)
     {
         //ce je st manjse
-        guess = floor((lbound + hbound) / 2);
-        if (read == 0)
-        {
-            guessed = true;
-            break;
-        }
+        guess = (lbound + hbound) / 2;
 
-        //printf("g:%d lb:%d hb: %d\n",guess, lbound,hbound);
-
-        if (hbound - lbound == 1)
+        switch (read)
         {
-            printf("PROTISLOVJE");
-            return 0;
+            case 0:
+                printf("%d",guess);
+                break;
+            case 1:
+                lbound = guess + 1;
+                break;
+            case 2:
+                hbound = guess - 1;
+                break;
         }
-
-        if (read < 0)
-        {
-            hbound = guess;
-        }
-        else
-        {
-            lbound = guess;
-        }
-
     }
 
-    if (guessed)
-        printf("%d\n",guess);
-    else
-    {
-        guess = floor((lbound + hbound) / 2);
-        if (hbound - lbound <= 2)
-            printf("%d\n",guess);
-        else
-            printf("%d %d\n",lbound +1,hbound -1);
-    }
+    if (lbound > hbound) printf("PROTISLOVJE");
+    else if (lbound < hbound) printf("%d %d",lbound, hbound);
+    else printf("%d",guess);
     return 0;
 }
