@@ -8,7 +8,7 @@
 !*.c
 !*.h
 !*.md
-
+!*.png
 # 4. Explicitly ignore everything inside Tests EXCEPT the runTests binary
 private/
 Tests/*
