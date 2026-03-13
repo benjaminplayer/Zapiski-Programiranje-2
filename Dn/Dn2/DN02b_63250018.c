@@ -1,107 +1,124 @@
 #include <stdio.h>
 #include <stdbool.h>
+#include <stdlib.h>
+
+// 123 10001 04856 9 0 1234a 00
+// 1101100
 
 void readUntilNextToken(void)
 {
-    while (getchar() != ' ');
+    char c;
+    while ((c = getchar()) != ' ')
+    {
+        if (c == '\n')
+            exit(0);
+    }
 }
+bool reachedNewLine = false, endOfToken = false;
+
+bool stateB(int len, char c);
+
+bool universalState(int len,const char c, const char bound1, const char bound2)
+{
+    if (c == ' ')
+    {
+        endOfToken = true;
+        return true;
+    }
+    if (c == '\n')
+    {
+        reachedNewLine = true;
+        return true;
+    }
+    if (c >= bound1 && c <= bound2)
+        return universalState(++len,getchar(), bound1, bound2);
+    return false;
+}
+
+bool stateD(int len, const char c)
+{
+    if (c == ' ' && len > 2)
+    {
+        endOfToken = true;
+        return true;
+    }
+    if (c == '\n')
+    {
+        reachedNewLine = true;
+        if (len > 2) return true;
+    }
+    else if (c >= '0' && c <= '1')
+        return stateD(++len,getchar());
+    if (c == ' ') endOfToken = true;
+    return false;
+
+}
+
+bool hexState(int len, const char c)
+{
+    if (c == ' ' && len > 2)
+    {
+        endOfToken = true;
+        return true;
+    }
+    if (c == '\n')
+    {
+        reachedNewLine = true;
+        if (len > 2) return true;
+    }
+    else if (c >= '0' && c <= '9' || c >= 'A' && c <= 'F')
+        return hexState(++len,getchar());
+    if (c == ' ') endOfToken = true;
+    return false;
+
+}
+
+bool stateA(const char c)
+{
+    if (c >= '1' && c <= '9')
+        return universalState(1,getchar(),'0','9');
+    if(c == '0')
+        return stateB(1,getchar());
+    return false;
+}
+
+bool stateB(int len, const char c)
+{
+    if (c == ' ')
+    {
+        endOfToken = true;
+        return true;
+    }
+    if (c == '\n')
+    {
+        reachedNewLine = true;
+        return true;
+    }
+    if (c >= '0' && c <= '7')
+        return universalState(++len,getchar(),'0','7');
+    if (c == 'x')
+        return hexState(++len,getchar());
+    if (c == 'b')
+        return stateD(++len,getchar());
+    return false;
+}
+
 
 int main(int argc, char *argv[])
 {
-    char c, first_char = 0, second_char = 0;
-    int readChars = 1;
-    while ((c = getchar()) != '\n')
+    char c;
+
+    while (!reachedNewLine && (c = getchar()) != '\n')
     {
-        //printf("read chars: %d\n",readChars);
-
-        //get the first character in a string
-        if (readChars == 1)
-            first_char = c;
-        //printf("read char: %c; firstchar: %c\n",c,first_char);
-        if (first_char > '0' && first_char <= '9' && c != ' ')
-        {
-            //printf("first char is: %c\n", first_char);
-            if (c < '0' || c > '9')
-            {
-                putchar('0');
-                readUntilNextToken();
-                readChars = 0;
-
-            }
-        }
-        else if (first_char == '0' && c != ' ')
-        {
-            //printf("read chars: %d, current char: %c\n",readChars, c);
-            if (readChars < 2)
-            {
-                readChars++;
-                continue;
-            }
-
-            if (readChars == 2)
-                second_char = c;
-            if (second_char == 'x')
-            {
-                if (readChars == 2)
-                {
-                    readChars++;
-                    continue;
-                }
-                if (!((c >= '0' && c <='9') || (c >= 'A' && c<='F')))
-                {
-                    putchar('0');
-                    readChars = 0;
-                    first_char = 0;
-                    second_char = 0;
-                    readUntilNextToken();
-                    //second_char = 0;
-                }
-            }
-            else if (second_char == 'b')
-            {
-                if (readChars == 2)
-                {
-                    readChars++;
-                    continue;
-                }
-                if (c < '0' || c > '1')
-                {
-                    putchar('0');
-                    readChars = 0;
-                    first_char = 0;
-                    second_char = 0;
-                    readUntilNextToken();
-                    //second_char = 0;
-                }
-            }else
-            {
-                if (c < '0' || c > '7')
-                {
-                    putchar('0');
-                    readChars = 0;
-                    readUntilNextToken();
-                }
-
-            }
-        }
-        else if (c ==' ')
-        {
-            putchar('1');
-            readChars = 0;
-            first_char = 0;
-            second_char = 0;
-        }
+        const bool res = stateA(c);
+        if (res) putchar('1');
         else
         {
             putchar('0');
-            readChars = 0;
-            first_char = 0;
-            second_char = 0;
-            readUntilNextToken();
+            if (!endOfToken) readUntilNextToken();
         }
-        readChars++;
+
+        endOfToken = false; //reset
     }
-
-    //pass ? putchar('1') : putchar('0');
-
+    return 0;
 }
