@@ -1,40 +1,77 @@
 #include <stdio.h>
 #include <stdbool.h>
+bool endOfToken = false, endOfLine = false;
 
-void readUntilSpace(void)
+void readUntilNextToken(void)
 {
-    while (getchar()!=' ');
+    char c;
+    while ((c = getchar())!=' ')
+    {
+        if (c == '\n')
+        {
+            endOfLine = true;
+            return;
+        }
+    }
+}
+
+
+bool universalState(int len, const char c)
+{
+    if (c == ' ')
+    {
+        endOfToken = true;
+        return true;
+    }
+    if (c == '\n')
+    {
+        endOfLine = true;
+        return true;
+    }
+    if (c >= '0' && c <= '9')
+        return universalState(++len, getchar());
+    return false;
+}
+
+bool checkZero(int len, const char c)
+{
+    if (c == '0')
+        return false;
+    if (c == ' ')
+    {
+        endOfToken = true;
+        return true;
+    }
+    if (c == '\n')
+    {
+        endOfLine = true;
+        return true;
+    }
+    return false;
+}
+
+bool nodeA(const char c)
+{
+    if (c >= '1' && c <= '9')
+        return universalState(1, getchar());
+    if (c == '0')
+        return checkZero(1, getchar());
+    return false;
 }
 
 int main(int argc, char *argv[])
 {
     char c;
-    bool first = true, firstZero = false;
-    int len = 0;
-    while ((c = getchar()) != '\n')
+    while (!endOfLine && (c=getchar())!='\n')
     {
-        if (c >= '0' && c <= '9')
-        {
-            if (first)
-                firstZero = c == '0';
-            first = false;
-            len++;
-        }
-        else if (c == ' ')
-        {
-            if (firstZero && len > 1) putchar('0');
-            else putchar('1');
-            len = 0;
-            first = true;
-        }
+        if (nodeA(c))
+            putchar('1');
         else
         {
             putchar('0');
-            len = 0;
-            first = true;
-            readUntilSpace();
+            if (!endOfToken) readUntilNextToken();
         }
+        endOfToken = false;
+
     }
-    if (firstZero && len > 1) putchar('0');
-    else putchar('1');
 }

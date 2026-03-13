@@ -1,20 +1,22 @@
 #include <stdio.h>
 #include <stdbool.h>
-#include <stdlib.h>
 
 // 123 10001 04856 9 0 1234a 00
 // 1101100
-
+bool reachedNewLine = false, endOfToken = false;
 void readUntilNextToken(void)
 {
     char c;
     while ((c = getchar()) != ' ')
     {
         if (c == '\n')
-            exit(0);
+        {
+            reachedNewLine = true;
+            return;
+        }
     }
 }
-bool reachedNewLine = false, endOfToken = false;
+
 
 bool stateB(int len, char c);
 
