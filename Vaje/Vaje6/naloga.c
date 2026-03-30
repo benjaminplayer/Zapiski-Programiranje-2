@@ -32,9 +32,9 @@ int indexOf(char *str, char c)
 
 char* kopirajDoZnaka(char* niz, char znak) {
     // popravite / dopolnite ...
-    int len = indexOf(niz,znak) + 1;
-    if (len == 0) len = strlen(niz);
-    char *temp = (char*)calloc(len,sizeof(char));
+    int len = indexOf(niz,znak);
+    if (len == -1) len = strlen(niz);
+    char *temp = (char*)calloc(len + 1,sizeof(char));
     for (int i = 0; i < len; i++)
     {
         temp[i] = *niz;
@@ -56,7 +56,7 @@ char** razcleni(char* niz, char locilo, int* stOdsekov) {
     {
         split_string[i] = kopirajDoZnaka(niz,locilo);
         int offset = strlen(split_string[i]);
-        niz += offset;
+        niz += offset+1; //offset + 1 bc space :)
     }
     *stOdsekov = number_of_splits;
     return split_string;
@@ -67,18 +67,14 @@ char** razcleni(char* niz, char locilo, int* stOdsekov) {
 int main() {
     // koda za ro"cno testiranje (po "zelji)
 
-    char *str = "This is sepeternal\0";
-    int len = 0;
-
-    char **split = razcleni(str,' ',&len);
-
-    for (int i = 0; i < len; i++)
-    {
-        printf("%s\n",split[i]);
-        free(split[i]);
+    char *niz = "prijazen niz z enim samim presledkom med besedami\0";
+    int stOdsekov = 0;
+    char** odseki = razcleni(niz, ' ', &stOdsekov);
+    for (int i = 0;  i < stOdsekov;  i++) {
+        printf("%d: <%s>\n", i + 1, odseki[i]);
+        free(odseki[i]);
     }
-
-    free(split);
+    free(odseki);
     return 0;
 }
 
