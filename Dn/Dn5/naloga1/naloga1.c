@@ -30,8 +30,8 @@ int* poisci(int* t, int* dolzina, int** konec)
 
 int main() {
     // koda za ro"cno testiranje (po "zelji)
-    int arr[] = {0,1,2,3,4,5,0,8,9,0,10,21,0};
-    int *t = arr + 7;
+    int arr[] = {1,2,3,4,5,0,8,9,0,10,21,0};
+    int *t = arr;
     int dolzina = 0;
     int* konec = NULL;
 
